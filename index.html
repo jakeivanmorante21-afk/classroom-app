@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Classroom Clone</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="loginPage" class="login-page">
+    <div class="login-card">
+      <h1>Classroom</h1>
+      <p style="color: var(--muted); margin-top: 0;">Sign in to continue</p>
+
+      <div class="toggle-box">
+        <button class="active" data-role="teacher">Teacher</button>
+        <button data-role="student">Student</button>
+      </div>
+
+      <form id="loginForm" class="login-form">
+        <div class="field">
+          <label for="loginName">Full name</label>
+          <input id="loginName" type="text" placeholder="e.g. Alex Johnson" required />
+        </div>
+
+        <div class="field">
+          <label for="loginEmail">Email</label>
+          <input id="loginEmail" type="email" placeholder="name@example.com" required />
+        </div>
+
+        <button class="btn primary" type="submit" style="width: 100%;">Enter classroom</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="appShell" class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-badge">C</div>
+        <span>Classroom</span>
+      </div>
+
+      <div class="top-actions">
+        <button class="btn" id="logoutBtn">Log out</button>
+        <div class="user-pill">
+          <div class="avatar" id="headerAvatar">A</div>
+          <span id="headerUserName">User</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="nav-section">
+          <div class="nav-title">Menu</div>
+          <div class="nav-item active" data-view="dashboard">
+            <div class="left">
+              <span class="dot"></span>
+              <span>Dashboard</span>
+            </div>
+          </div>
+          <div class="nav-item" data-view="created">
+            <div class="left">
+              <span class="dot" style="background:#34a853;"></span>
+              <span>My Classes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-title">Actions</div>
+          <button class="btn primary" id="createClassBtn" style="width: 100%; margin-bottom: 10px;">Create class</button>
+          <button class="btn" id="joinClassBtn" style="width: 100%;">Join class</button>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <div id="dashboardView">
+          <div class="hero">
+            <h1>Dashboard</h1>
+            <div class="action-row">
+              <button class="btn primary" id="addClassQuickBtn">Add class</button>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <section class="card">
+              <div class="panel">
+                <h3>Classes</h3>
+                <div id="classList" class="class-list"></div>
+              </div>
+            </section>
+
+            <aside class="card">
+              <div class="panel">
+                <h3>Overview</h3>
+                <div class="list" id="overviewList"></div>
+              </div>
+            </aside>
+          </div>
+        </div>
+
+        <div id="classView" class="class-view">
+          <div class="class-header" id="classHeader">
+            <h2 id="currentClassName">Class Name</h2>
+            <div id="currentClassMeta">Teacher • Section • Room</div>
+          </div>
+
+          <div class="class-tabs">
+            <button class="tab active" data-tab="stream">Stream</button>
+            <button class="tab" data-tab="assignments">Assignments</button>
+            <button class="tab" data-tab="people">People</button>
+          </div>
+
+          <div class="section active" id="streamSection">
+            <div class="feed">
+              <h3>Announcements</h3>
+              <div id="announcementList"></div>
+            </div>
+
+            <div class="assignments">
+              <h3>Upcoming</h3>
+              <div id="upcomingAssignments"></div>
+            </div>
+          </div>
+
+          <div class="section" id="assignmentsSection">
+            <div class="assignments">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h3>Assignments</h3>
+                <button class="btn primary" id="newAssignmentBtn">New assignment</button>
+              </div>
+              <div id="assignmentList"></div>
+            </div>
+
+            <div class="students">
+              <h3>Submission status</h3>
+              <div id="submissionList"></div>
+            </div>
+          </div>
+
+          <div class="section" id="peopleSection">
+            <div class="students">
+              <h3>People</h3>
+              <div id="peopleList"></div>
+            </div>
+            <div class="feed">
+              <h3>Class summary</h3>
+              <div id="classSummary"></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="classModal" class="float">
+    <div class="modal">
+      <h2 id="classModalTitle">Create class</h2>
+      <form id="classForm">
+        <div class="form-grid">
+          <div class="field">
+            <label for="className">Class name</label>
+            <input id="className" type="text" required />
+          </div>
+          <div class="field">
+            <label for="classSection">Section</label>
+            <input id="classSection" type="text" placeholder="e.g. Algebra 1" />
+          </div>
+          <div class="field">
+            <label for="classSubject">Subject</label>
+            <input id="classSubject" type="text" />
+          </div>
+          <div class="field">
+            <label for="classRoom">Room</label>
+            <input id="classRoom" type="text" />
+          </div>
+          <div class="field full">
+            <label for="classDescription">Description</label>
+            <textarea id="classDescription" rows="4"></textarea>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn" data-close-modal="classModal">Cancel</button>
+          <button type="submit" class="btn primary">Save class</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="assignmentModal" class="float">
+    <div class="modal">
+      <h2>Create assignment</h2>
+      <form id="assignmentForm">
+        <div class="field">
+          <label for="assignmentTitle">Title</label>
+          <input id="assignmentTitle" type="text" required />
+        </div>
+
+        <div class="field">
+          <label for="assignmentDue">Due date</label>
+          <input id="assignmentDue" type="date" required />
+        </div>
+
+        <div class="field">
+          <label for="assignmentPoints">Points</label>
+          <input id="assignmentPoints" type="number" min="1" value="100" required />
+        </div>
+
+        <div class="field">
+          <label for="assignmentInstructions">Instructions</label>
+          <textarea id="assignmentInstructions" rows="5" required></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn" data-close-modal="assignmentModal">Cancel</button>
+          <button type="submit" class="btn primary">Create assignment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
